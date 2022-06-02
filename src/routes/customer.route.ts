@@ -1,25 +1,8 @@
-import { Router } from 'express';
-import CustomerController from '../controllers/customer.controller';
-import { CreateCustomerDTO } from '../dtos/customer.dto';
-import { Route } from '../interfaces/route.interface';
-import validationMiddleware from '../middleware/validation.middleware';
+import express from 'express';
+import controller from '../controllers/customer.controller';
 
-class CustomerRoute implements Route {
-    public path = '/customers';
-    public router = Router();
-    public CustomerController = new CustomerController();
+const router = express.Router();
 
-    constructor() {
-        this.initializeRoutes();
-    }
+router.route('/').get(controller.getAllCustomers).post(controller.createCustomer);
 
-    private initializeRoutes() {
-        this.router.get(`${this.path}`, this.CustomerController.getCustomers);
-        this.router.get(`${this.path}/:id`, this.CustomerController.getSingleCustomer);
-        this.router.post(`${this.path}`, validationMiddleware(CreateCustomerDTO), this.CustomerController.addCustomer);
-        this.router.put(`${this.path}/:id`, validationMiddleware(CreateCustomerDTO, true), this.CustomerController.updateCustomer);
-        this.router.delete(`${this.path}/:id`, this.CustomerController.deleteCustomer);
-    }
-}
-
-export default CustomerRoute;
+router.route('/:id').get(controller.getCustomerById).put(controller.updateCustomer).delete(controller.deleteCustomer);

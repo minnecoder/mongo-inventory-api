@@ -1,25 +1,8 @@
-import { Router } from 'express';
-import ProductSupplierController from '../controllers/productSupplier.controller';
-import { CreateProductSupplierDTO } from '../dtos/productSupplier.dto';
-import { Route } from '../interfaces/route.interface';
-import validationMiddleware from '../middleware/validation.middleware';
+import express from 'express';
+import controller from '../controllers/productSupplier.controller';
 
-class ProductSupplierRoute implements Route {
-    public path = '/productsuppliers';
-    public router = Router();
-    public ProductSupplierController = new ProductSupplierController();
+const router = express.Router();
 
-    constructor() {
-        this.initializeRoutes();
-    }
+router.route('/').get(controller.getAllProductSuppliers).post(controller.createProductSupplier);
 
-    private initializeRoutes() {
-        this.router.get(`${this.path}`, this.ProductSupplierController.getProductSuppliers);
-        this.router.get(`${this.path}/:id`, this.ProductSupplierController.getSingleProductSupplier);
-        this.router.post(`${this.path}`, validationMiddleware(CreateProductSupplierDTO), this.ProductSupplierController.addProductSupplier);
-        this.router.put(`${this.path}/:id`, validationMiddleware(CreateProductSupplierDTO, true), this.ProductSupplierController.updateProductSupplier);
-        this.router.delete(`${this.path}/:id`, this.ProductSupplierController.deleteProductSupplier);
-    }
-}
-
-export default ProductSupplierRoute;
+router.route('/:id').get(controller.getProductSupplierById).put(controller.updateProductSupplier).delete(controller.deleteProductSupplier);

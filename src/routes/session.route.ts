@@ -1,25 +1,8 @@
-import { Router } from 'express';
-import SessionController from '../controllers/session.controller';
-import { CreateSessionDTO } from '../dtos/session.dto';
-import { Route } from '../interfaces/route.interface';
-import validationMiddleware from '../middleware/validation.middleware';
+import express from 'express';
+import controller from '../controllers/session.controller';
 
-class SessionRoute implements Route {
-    public path = '/sessions';
-    public router = Router();
-    public SessionController = new SessionController();
+const router = express.Router();
 
-    constructor() {
-        this.initializeRoutes();
-    }
+router.route('/').get(controller.getAllSessions).post(controller.createSession);
 
-    private initializeRoutes() {
-        this.router.get(`${this.path}`, this.SessionController.getSessions);
-        this.router.get(`${this.path}/:id`, this.SessionController.getSingleSession);
-        this.router.post(`${this.path}`, validationMiddleware(CreateSessionDTO), this.SessionController.addSession);
-        this.router.put(`${this.path}/:id`, validationMiddleware(CreateSessionDTO, true), this.SessionController.updateSession);
-        this.router.delete(`${this.path}/:id`, this.SessionController.deleteSession);
-    }
-}
-
-export default SessionRoute;
+router.route('/:id').get(controller.getSessionById).put(controller.updateSession).delete(controller.deleteSession);

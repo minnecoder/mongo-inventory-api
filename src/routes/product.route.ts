@@ -1,25 +1,8 @@
-import { Router } from 'express';
-import ProductController from '../controllers/product.controller';
-import { CreateProductDTO } from '../dtos/product.dto';
-import { Route } from '../interfaces/route.interface';
-import validationMiddleware from '../middleware/validation.middleware';
+import express from 'express';
+import controller from '../controllers/product.controller';
 
-class ProductRoute implements Route {
-    public path = '/products';
-    public router = Router();
-    public ProductController = new ProductController();
+const router = express.Router();
 
-    constructor() {
-        this.initializeRoutes();
-    }
+router.route('/').get(controller.getAllProducts).post(controller.createProduct);
 
-    private initializeRoutes() {
-        this.router.get(`${this.path}`, this.ProductController.getProducts);
-        this.router.get(`${this.path}/:id`, this.ProductController.getSingleProduct);
-        this.router.post(`${this.path}`, validationMiddleware(CreateProductDTO), this.ProductController.addProduct);
-        this.router.put(`${this.path}/:id`, validationMiddleware(CreateProductDTO, true), this.ProductController.updateProduct);
-        this.router.delete(`${this.path}/:id`, this.ProductController.deleteProduct);
-    }
-}
-
-export default ProductRoute;
+router.route('/:id').get(controller.getProductById).put(controller.updateProduct).delete(controller.deleteProduct);

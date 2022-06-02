@@ -1,25 +1,8 @@
-import { Router } from 'express';
-import SupplierController from '../controllers/supplier.controller';
-import { CreateSupplierDTO } from '../dtos/supplier.dto';
-import { Route } from '../interfaces/route.interface';
-import validationMiddleware from '../middleware/validation.middleware';
+import express from 'express';
+import controller from '../controllers/supplier.controller';
 
-class SupplierRoute implements Route {
-    public path = '/suppliers';
-    public router = Router();
-    public SupplierController = new SupplierController();
+const router = express.Router();
 
-    constructor() {
-        this.initializeRoutes();
-    }
+router.route('/').get(controller.getAllSuppliers).post(controller.createSupplier);
 
-    private initializeRoutes() {
-        this.router.get(`${this.path}`, this.SupplierController.getSuppliers);
-        this.router.get(`${this.path}/:id`, this.SupplierController.getSingleSupplier);
-        this.router.post(`${this.path}`, validationMiddleware(CreateSupplierDTO), this.SupplierController.addSupplier);
-        this.router.put(`${this.path}/:id`, validationMiddleware(CreateSupplierDTO, true), this.SupplierController.updateSupplier);
-        this.router.delete(`${this.path}/:id`, this.SupplierController.deleteSupplier);
-    }
-}
-
-export default SupplierRoute;
+router.route('/:id').get(controller.getSupplierById).put(controller.updateSupplier).delete(controller.deleteSupplier);
