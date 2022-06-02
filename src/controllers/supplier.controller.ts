@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import Supplier from '../models/supplier.model';
 
-export const getAllSuppliers = async (req: Request, res: Response, next: NextFunction) => {
+const getAllSuppliers = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const suppliers = await Supplier.find();
         res.status(200).json(suppliers);
@@ -10,7 +10,7 @@ export const getAllSuppliers = async (req: Request, res: Response, next: NextFun
     }
 };
 
-export const getSupplierById = async (req: Request, res: Response, next: NextFunction) => {
+const getSupplierById = async (req: Request, res: Response, next: NextFunction) => {
     const supplierId = req.params.id;
 
     try {
@@ -21,7 +21,7 @@ export const getSupplierById = async (req: Request, res: Response, next: NextFun
     }
 };
 
-export const createSupplier = async (req: Request, res: Response, next: NextFunction) => {
+const createSupplier = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const supplier = new Supplier(req.body);
         const newSupplier = await supplier.save();
@@ -31,7 +31,7 @@ export const createSupplier = async (req: Request, res: Response, next: NextFunc
     }
 };
 
-export const updateSupplier = async (req: Request, res: Response, next: NextFunction) => {
+const updateSupplier = async (req: Request, res: Response, next: NextFunction) => {
     const supplierId = req.params.id;
     const updateSupplier = req.body;
 
@@ -43,7 +43,7 @@ export const updateSupplier = async (req: Request, res: Response, next: NextFunc
     }
 };
 
-export const deleteSupplier = async (req: Request, res: Response, next: NextFunction) => {
+const deleteSupplier = async (req: Request, res: Response, next: NextFunction) => {
     const supplierId = req.params.id;
 
     try {
@@ -53,3 +53,5 @@ export const deleteSupplier = async (req: Request, res: Response, next: NextFunc
         next(error);
     }
 };
+
+export default { getAllSuppliers, getSupplierById, createSupplier, updateSupplier, deleteSupplier };

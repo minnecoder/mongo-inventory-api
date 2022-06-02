@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import ProductReview from '../models/productReview.model';
 
-export const getAllProductReviews = async (req: Request, res: Response, next: NextFunction) => {
+const getAllProductReviews = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const productReviews = await ProductReview.find();
         res.status(200).json(productReviews);
@@ -10,7 +10,7 @@ export const getAllProductReviews = async (req: Request, res: Response, next: Ne
     }
 };
 
-export const getProductReviewById = async (req: Request, res: Response, next: NextFunction) => {
+const getProductReviewById = async (req: Request, res: Response, next: NextFunction) => {
     const productReviewId = req.params.id;
 
     try {
@@ -21,7 +21,7 @@ export const getProductReviewById = async (req: Request, res: Response, next: Ne
     }
 };
 
-export const createProductReview = async (req: Request, res: Response, next: NextFunction) => {
+const createProductReview = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const productReview = new ProductReview(req.body);
         const newProductReview = await productReview.save();
@@ -31,7 +31,7 @@ export const createProductReview = async (req: Request, res: Response, next: Nex
     }
 };
 
-export const updateProductReview = async (req: Request, res: Response, next: NextFunction) => {
+const updateProductReview = async (req: Request, res: Response, next: NextFunction) => {
     const productReviewId = req.params.id;
     const updateProductReview = req.body;
 
@@ -43,7 +43,7 @@ export const updateProductReview = async (req: Request, res: Response, next: Nex
     }
 };
 
-export const deleteProductReview = async (req: Request, res: Response, next: NextFunction) => {
+const deleteProductReview = async (req: Request, res: Response, next: NextFunction) => {
     const productReviewId = req.params.id;
 
     try {
@@ -53,3 +53,5 @@ export const deleteProductReview = async (req: Request, res: Response, next: Nex
         next(error);
     }
 };
+
+export default { getAllProductReviews, getProductReviewById, createProductReview, updateProductReview, deleteProductReview };

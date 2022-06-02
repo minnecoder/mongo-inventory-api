@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import Order from '../models/order.model';
 
-export const getAllOrders = async (req: Request, res: Response, next: NextFunction) => {
+const getAllOrders = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const orders = await Order.find();
         res.status(200).json(orders);
@@ -10,7 +10,7 @@ export const getAllOrders = async (req: Request, res: Response, next: NextFuncti
     }
 };
 
-export const getOrderById = async (req: Request, res: Response, next: NextFunction) => {
+const getOrderById = async (req: Request, res: Response, next: NextFunction) => {
     const orderId = req.params.id;
 
     try {
@@ -21,7 +21,7 @@ export const getOrderById = async (req: Request, res: Response, next: NextFuncti
     }
 };
 
-export const createOrder = async (req: Request, res: Response, next: NextFunction) => {
+const createOrder = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const order = new Order(req.body);
         const newOrder = await order.save();
@@ -31,7 +31,7 @@ export const createOrder = async (req: Request, res: Response, next: NextFunctio
     }
 };
 
-export const updateOrder = async (req: Request, res: Response, next: NextFunction) => {
+const updateOrder = async (req: Request, res: Response, next: NextFunction) => {
     const orderId = req.params.id;
     const updateOrder = req.body;
 
@@ -43,7 +43,7 @@ export const updateOrder = async (req: Request, res: Response, next: NextFunctio
     }
 };
 
-export const deleteOrder = async (req: Request, res: Response, next: NextFunction) => {
+const deleteOrder = async (req: Request, res: Response, next: NextFunction) => {
     const orderId = req.params.id;
 
     try {
@@ -53,3 +53,5 @@ export const deleteOrder = async (req: Request, res: Response, next: NextFunctio
         next(error);
     }
 };
+
+export default { getAllOrders, getOrderById, createOrder, updateOrder, deleteOrder };

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import Product from '../models/product.model';
 
-export const getAllProducts = async (req: Request, res: Response, next: NextFunction) => {
+const getAllProducts = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const products = await Product.find();
         res.status(200).json(products);
@@ -10,7 +10,7 @@ export const getAllProducts = async (req: Request, res: Response, next: NextFunc
     }
 };
 
-export const getProductById = async (req: Request, res: Response, next: NextFunction) => {
+const getProductById = async (req: Request, res: Response, next: NextFunction) => {
     const productId = req.params.id;
 
     try {
@@ -21,7 +21,7 @@ export const getProductById = async (req: Request, res: Response, next: NextFunc
     }
 };
 
-export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
+const createProduct = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const product = new Product(req.body);
         const newProduct = await product.save();
@@ -31,7 +31,7 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
     }
 };
 
-export const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
+const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
     const productId = req.params.id;
     const updateProduct = req.body;
 
@@ -43,7 +43,7 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
     }
 };
 
-export const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
+const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
     const productId = req.params.id;
 
     try {
@@ -53,3 +53,5 @@ export const deleteProduct = async (req: Request, res: Response, next: NextFunct
         next(error);
     }
 };
+
+export default { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct };

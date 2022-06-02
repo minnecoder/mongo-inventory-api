@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import Customer from '../models/customer.model';
 
-export const getAllCustomers = async (req: Request, res: Response, next: NextFunction) => {
+const getAllCustomers = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const customers = await Customer.find();
         res.status(200).json(customers);
@@ -10,7 +10,7 @@ export const getAllCustomers = async (req: Request, res: Response, next: NextFun
     }
 };
 
-export const getCustomerById = async (req: Request, res: Response, next: NextFunction) => {
+const getCustomerById = async (req: Request, res: Response, next: NextFunction) => {
     const customerId = req.params.id;
 
     try {
@@ -21,7 +21,7 @@ export const getCustomerById = async (req: Request, res: Response, next: NextFun
     }
 };
 
-export const createCustomer = async (req: Request, res: Response, next: NextFunction) => {
+const createCustomer = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const customer = new Customer(req.body);
         const newCustomer = await customer.save();
@@ -31,7 +31,7 @@ export const createCustomer = async (req: Request, res: Response, next: NextFunc
     }
 };
 
-export const updateCustomer = async (req: Request, res: Response, next: NextFunction) => {
+const updateCustomer = async (req: Request, res: Response, next: NextFunction) => {
     const customerId = req.params.id;
     const updateCustomer = req.body;
 
@@ -43,7 +43,7 @@ export const updateCustomer = async (req: Request, res: Response, next: NextFunc
     }
 };
 
-export const deleteCustomer = async (req: Request, res: Response, next: NextFunction) => {
+const deleteCustomer = async (req: Request, res: Response, next: NextFunction) => {
     const customerId = req.params.id;
 
     try {
@@ -53,3 +53,5 @@ export const deleteCustomer = async (req: Request, res: Response, next: NextFunc
         next(error);
     }
 };
+
+export default { getAllCustomers, getCustomerById, createCustomer, updateCustomer, deleteCustomer };

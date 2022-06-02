@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import OrderProduct from '../models/orderProduct.model';
 
-export const getAllOrderProducts = async (req: Request, res: Response, next: NextFunction) => {
+const getAllOrderProducts = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const orderProducts = await OrderProduct.find();
         res.status(200).json(orderProducts);
@@ -10,7 +10,7 @@ export const getAllOrderProducts = async (req: Request, res: Response, next: Nex
     }
 };
 
-export const getOrderProductById = async (req: Request, res: Response, next: NextFunction) => {
+const getOrderProductById = async (req: Request, res: Response, next: NextFunction) => {
     const orderProductId = req.params.id;
 
     try {
@@ -21,7 +21,7 @@ export const getOrderProductById = async (req: Request, res: Response, next: Nex
     }
 };
 
-export const createOrderProduct = async (req: Request, res: Response, next: NextFunction) => {
+const createOrderProduct = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const orderProduct = new OrderProduct(req.body);
         const newOrderProduct = await orderProduct.save();
@@ -31,7 +31,7 @@ export const createOrderProduct = async (req: Request, res: Response, next: Next
     }
 };
 
-export const updateOrderProduct = async (req: Request, res: Response, next: NextFunction) => {
+const updateOrderProduct = async (req: Request, res: Response, next: NextFunction) => {
     const orderProductId = req.params.id;
     const updateOrderProduct = req.body;
 
@@ -43,7 +43,7 @@ export const updateOrderProduct = async (req: Request, res: Response, next: Next
     }
 };
 
-export const deleteOrderProduct = async (req: Request, res: Response, next: NextFunction) => {
+const deleteOrderProduct = async (req: Request, res: Response, next: NextFunction) => {
     const orderProductId = req.params.id;
 
     try {
@@ -53,3 +53,5 @@ export const deleteOrderProduct = async (req: Request, res: Response, next: Next
         next(error);
     }
 };
+
+export default { getAllOrderProducts, getOrderProductById, createOrderProduct, updateOrderProduct, deleteOrderProduct };

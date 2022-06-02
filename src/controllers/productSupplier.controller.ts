@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import ProductSupplier from '../models/productSupplier.model';
 
-export const getAllProductSuppliers = async (req: Request, res: Response, next: NextFunction) => {
+const getAllProductSuppliers = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const productSuppliers = await ProductSupplier.find();
         res.status(200).json(productSuppliers);
@@ -10,7 +10,7 @@ export const getAllProductSuppliers = async (req: Request, res: Response, next: 
     }
 };
 
-export const getProductSupplierById = async (req: Request, res: Response, next: NextFunction) => {
+const getProductSupplierById = async (req: Request, res: Response, next: NextFunction) => {
     const productSupplierId = req.params.id;
 
     try {
@@ -21,7 +21,7 @@ export const getProductSupplierById = async (req: Request, res: Response, next: 
     }
 };
 
-export const createProductSupplier = async (req: Request, res: Response, next: NextFunction) => {
+const createProductSupplier = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const productSupplier = new ProductSupplier(req.body);
         const newProductSupplier = await productSupplier.save();
@@ -31,7 +31,7 @@ export const createProductSupplier = async (req: Request, res: Response, next: N
     }
 };
 
-export const updateProductSupplier = async (req: Request, res: Response, next: NextFunction) => {
+const updateProductSupplier = async (req: Request, res: Response, next: NextFunction) => {
     const productSupplierId = req.params.id;
     const updateProductSupplier = req.body;
 
@@ -43,7 +43,7 @@ export const updateProductSupplier = async (req: Request, res: Response, next: N
     }
 };
 
-export const deleteProductSupplier = async (req: Request, res: Response, next: NextFunction) => {
+const deleteProductSupplier = async (req: Request, res: Response, next: NextFunction) => {
     const productSupplierId = req.params.id;
 
     try {
@@ -53,3 +53,5 @@ export const deleteProductSupplier = async (req: Request, res: Response, next: N
         next(error);
     }
 };
+
+export default { getAllProductSuppliers, getProductSupplierById, createProductSupplier, updateProductSupplier, deleteProductSupplier };

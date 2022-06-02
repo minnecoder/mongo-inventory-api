@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import Session from '../models/session.model';
 
-export const getAllSessions = async (req: Request, res: Response, next: NextFunction) => {
+const getAllSessions = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const sessions = await Session.find();
         res.status(200).json(sessions);
@@ -10,7 +10,7 @@ export const getAllSessions = async (req: Request, res: Response, next: NextFunc
     }
 };
 
-export const getSessionById = async (req: Request, res: Response, next: NextFunction) => {
+const getSessionById = async (req: Request, res: Response, next: NextFunction) => {
     const sessionId = req.params.id;
 
     try {
@@ -21,7 +21,7 @@ export const getSessionById = async (req: Request, res: Response, next: NextFunc
     }
 };
 
-export const createSession = async (req: Request, res: Response, next: NextFunction) => {
+const createSession = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const session = new Session(req.body);
         const newSession = await session.save();
@@ -31,7 +31,7 @@ export const createSession = async (req: Request, res: Response, next: NextFunct
     }
 };
 
-export const updateSession = async (req: Request, res: Response, next: NextFunction) => {
+const updateSession = async (req: Request, res: Response, next: NextFunction) => {
     const sessionId = req.params.id;
     const updateSession = req.body;
 
@@ -43,7 +43,7 @@ export const updateSession = async (req: Request, res: Response, next: NextFunct
     }
 };
 
-export const deleteSession = async (req: Request, res: Response, next: NextFunction) => {
+const deleteSession = async (req: Request, res: Response, next: NextFunction) => {
     const sessionId = req.params.id;
 
     try {
@@ -53,3 +53,5 @@ export const deleteSession = async (req: Request, res: Response, next: NextFunct
         next(error);
     }
 };
+
+export default { getAllSessions, getSessionById, createSession, updateSession, deleteSession };
