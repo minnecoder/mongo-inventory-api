@@ -1,29 +1,12 @@
-import { Router } from 'express';
-import { threadId } from 'worker_threads';
-import UserController from '../controllers/user.controller';
-import { CreateUserDTO } from '../dtos/user.dto';
-import { Route } from '../interfaces/route.interface';
-import validationMiddleware from '../middleware/validation.middleware';
+import express from 'express';
+import controller from '../controllers/user.controller';
 
-class UserRoute implements Route {
-    public path = '/users';
-    public router = Router();
-    public UserController = new UserController();
+const router = express.Router();
 
-    constructor() {
-        this.initializeRoutes();
-    }
+router.route('/').get(controller.getUsers).post(controller.addUser);
 
-    private initializeRoutes() {
-        this.router.get(`${this.path}`, this.UserController.getUsers);
-        this.router.get(`${this.path}/:id`, this.UserController.getSingleUser);
-        this.router.post(`${this.path}`, validationMiddleware(CreateUserDTO), this.UserController.registerUser);
-        this.router.put(`${this.path}/:id`, validationMiddleware(CreateUserDTO, true), this.UserController.updateUser);
-        this.router.delete(`${this.path}/:id`, this.UserController.deleteUser);
-        this.router.post(`${this.path}/login`, this.UserController.loginUser);
-        this.router.post(`${this.path}/validate`, this.UserController.validateEmail);
-        this.router.post(`${this.path}/logout`, this.UserController.logoutUser);
-    }
-}
+router.route('/:userId').get(controller.getSingleUser).put(controller.updateUser).delete(controller.deleteUser);
 
-export default UserRoute;
+router.route('/login').post(controller.loginUser);
+
+module.exports = router;
