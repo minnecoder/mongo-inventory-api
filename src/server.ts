@@ -46,6 +46,25 @@ const StartServer = () => {
     });
 
     // API Routes
+    const customers = require('./routes/customer.route');
+    const orders = require('./routes/order.route');
+    const orderProducts = require('./routes/orderProduct.route');
+    const products = require('./routes/product.route');
+    const productReviews = require('./routes/productReview.route');
+    const productSuppliers = require('./routes/productSupplier.route');
+    const sessions = require('./routes/session.route');
+    const suppliers = require('./routes/supplier.route');
+    const users = require('./routes/user.route');
+
+    app.use('/api/v1/customers', customers);
+    app.use('/api/v1/orders', orders);
+    app.use('/api/v1/orderproducts', orderProducts);
+    app.use('/api/v1/products', products);
+    app.use('/api/v1/productreviews', productReviews);
+    app.use('/api/v1/productsuppliers', productSuppliers);
+    app.use('/api/v1/sessions', sessions);
+    app.use('/api/v1/suppliers', suppliers);
+    app.use('/api/v1/users', users);
 
     // Health Check
     app.get('/health', (req, res, next) => res.status(200).json({ message: 'OK' }));
