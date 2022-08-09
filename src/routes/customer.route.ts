@@ -6,3 +6,5 @@ const router = express.Router();
 router.route('/').get(controller.getAllCustomers).post(controller.createCustomer);
 
 router.route('/:id').get(controller.getCustomerById).put(controller.updateCustomer).delete(controller.deleteCustomer);
+
+module.exports = router;
